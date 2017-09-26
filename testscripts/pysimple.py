@@ -1,4 +1,4 @@
-import pysimple2
+from .pysimple2 import *
 import testscripts.pysimple3
 from pyfolder import *
 
@@ -12,10 +12,10 @@ def b():
 	c()
 
 def c():
-	print 'this is c'
+	print('this is c')
 
 class e:
-	def f():
+	def f(self):
 		b()
 		pysimple2.h.a()
 

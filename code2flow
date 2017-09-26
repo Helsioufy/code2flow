@@ -32,7 +32,6 @@ This python file is a wrapper for the functionality. Basically, it will:
 
 '''
 
-import __builtin__
 import argparse
 import os
 import pdb
@@ -78,9 +77,10 @@ SUPPORTED_LANGUAGES = {'js':'javascript','py':'python'}
 
 
 if __name__ == "__main__":
+	import builtins
 
 	if not isInstalled('dot') and not isInstalled('dot.exe'):
-		print "You must have graphviz (specifically dot) installed to run code2flow"
+		print("You must have graphviz (specifically dot) installed to run code2flow")
 		sys.exit(1)
 
 	cli = argparse.ArgumentParser(description="See flow charts of your source code.\n\rThis EXPERIMENTAL script is useful for documentation and code refactoring in simple projects")
@@ -95,9 +95,9 @@ if __name__ == "__main__":
 	args = cli.parse_args()
 
 	#set debug for this and all imported modules
-	__builtin__.DEBUG = args.debug
+	builtins.DEBUG = args.debug
 
-	if DEBUG:
+	if builtins.DEBUG:
 		pprint.pprint(args)
 		listen()
 
@@ -107,8 +107,8 @@ if __name__ == "__main__":
 	else:
 		language = None
 	files = []
-	if DEBUG:
-		print language
+	if builtins.DEBUG:
+		print(language)
 
 	def handleFile(fileString,forceAppend=False):
 		'''
@@ -167,9 +167,9 @@ if __name__ == "__main__":
 		command = "dot -T%s %s > %s"%(extension,dotFile,finalFile)
 		os.system(command)
 
-	print "Completed your flowchart!"
-	print "To see it, open %s"%args.outfile
+	print("Completed your flowchart!")
+	print("To see it, open %s"%args.outfile)
 
 	#open it in graphviz if we are on os.x
-	if DEBUG and sys.platform == 'darwin':
+	if builtins.DEBUG and sys.platform == 'darwin':
 		os.system("open out.gv")

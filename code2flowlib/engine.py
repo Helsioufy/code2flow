@@ -24,6 +24,7 @@ import os
 import re
 import pdb
 import pprint
+import builtins
 
 from mutablestring import MString
 
@@ -38,11 +39,11 @@ def generateEdges(nodes):
 	edges = []
 	for node0 in nodes:
 		for node1 in nodes:
-			if DEBUG:
-				print '"%s" links to "%s"?'%(node0.name,node1.name)
+			if builtins.DEBUG:
+				print('"%s" links to "%s"?'%(node0.name,node1.name))
 			if node0.linksTo(node1):
-				if DEBUG:
-					print "Edge created"
+				if builtins.DEBUG:
+					print("Edge created")
 				edges.append(Edge(node0,node1))
 	return edges
 
@@ -369,7 +370,7 @@ class SourceCode(object):
 			self._removeCommentsAndStrings()
 			self.sourceString = str(self.sourceString) #convert back to regular python string from mutable string
 
-			if DEBUG:
+			if builtins.DEBUG:
 				#print 'REMOVED COMMENTS',self
 				with open('cleanedSource','w') as outfile:
 					outfile.write(self.sourceString)
@@ -675,7 +676,7 @@ class SourceCode(object):
 		This uses a mutable string to save time on adding
 
 		'''
-		print "Removing comments and strings..."
+		print("Removing comments and strings...")
 
 		originalString = str(self.sourceString)
 		self.sourceString = MString('')
@@ -804,13 +805,13 @@ class Mapper(object):
 		for filename,fileString in self.files.items():
 			#remove .py from filename
 			filename = self.simpleFilename(filename)
-			print "Mapping %s"%filename
+			print("Mapping %s"%filename)
 
 			#generate sourcecode (remove comments and add line numbers)
 			source = SourceCode(fileString)
 
 			#Create all of the subgroups (classes) and nodes (functions) for this file
-			print "Generating function nodes..."
+			print("Generating function nodes...")
 			fileGroup = self.generateFileGroup(name=filename,source=source)
 			fileGroups.append(fileGroup)
 
@@ -820,12 +821,12 @@ class Mapper(object):
 		#Trimming the groups mostly removes those groups with no function nodes
 		for group in fileGroups:
 			group.trimGroups()
-			if DEBUG:
-				print "Post trim, %s"%group.name
+			if builtins.DEBUG:
+				print("Post trim, %s"%group.name)
 				group._pprint()
 
 		#Figure out what functions map to what
-		print "Generating edges..."
+		print("Generating edges...")
 		edges = generateEdges(nodes)
 
 		#Trim off the nodes (mostly global-frame nodes that don't do anything)
