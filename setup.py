@@ -7,9 +7,9 @@ setup(
 	scripts=['code2flow'],
 	package_dir={'code2flowlib': 'code2flowlib'},
 	license='LGPL',
-	author='Scott Rogowski',
-	author_email='scott@scottrogowski.com',
-	url='https://github.com/scottrogowski/code2flow',
+	author='Hany Elsioufy',
+	author_email='helsioufy@smartec-group.com',
+	url='https://github.com/Helsioufy/code2flow',
 	packages=find_packages(),
 	classifiers = (
 		'Natural Language :: English',
